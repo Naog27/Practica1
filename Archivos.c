@@ -6,7 +6,8 @@
 int main (int argc, char* argv[]){
 	
 	//char str[] = "3.0;4.2;5.0;2.5";
-	char str[100];
+	char str[10];
+	int str2[2];
 	char * pch;
 	int value;	
 	char *filename;
@@ -18,7 +19,7 @@ int main (int argc, char* argv[]){
 		return -1;
 	}
 	filename = argv[1];
-	file = fopen(filename, "rw");
+	file = fopen(filename, "r");
 	
 	if(file == NULL){
 		printf ("No pudo abrirse el fichero %s \n", filename);	
@@ -26,29 +27,22 @@ int main (int argc, char* argv[]){
 	}
 
 	//Ya esta abierto el fichero
+	
+	
+	fgets(str, 10, file);		
+	puts(str);
 	int i=0;
-	while (!feof(file))
+	pch = strtok (str,";");
+	while (pch != NULL)
 	{
-	
-		fgets(str, 100,file);	
 		
-		puts(str);
-		
-		pch = strtok (str,",");
-		while (pch!=NULL)
-		{
-
-			
-			value = atoi(pch);
-			//value++;			//Verificar que puedo operar con el numero 
-			printf ("value: %d\n",value);
-			pch = strtok (NULL, ",");
-			
-		}
-		
+		value = atoi(pch);
+		str2[i]=value;
+		//value++;			//Verificar que puedo operar con el numero 
+		printf ("Float value %d\n",str2[i]);
+		pch = strtok (NULL, ";");
+		i++;
 	}
-	
-	
 	fclose(file);
 	return 0;
 }
